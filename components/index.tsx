@@ -7,6 +7,7 @@ import StartScreen from './StartScreen'
 import EndScreen from './EndScreen'
 import NameEntry from './NameEntry'
 import Leaderboard from './Leaderboard'
+import { useRouter } from 'next/navigation'
 
 type GameState = 'start' | 'playing' | 'end' | 'name_entry' | 'leaderboard'
 type DotType = 'good' | 'bad' | 'bonus'
@@ -23,6 +24,7 @@ const ROUNDS = 3
 const GRID_SIZE = 16 // 4x4 grid
 
 export default function Game() {
+  const router = useRouter()
   const [gameState, setGameState] = useState<GameState>('start')
   const [score, setScore] = useState(0)
   const [timeLeft, setTimeLeft] = useState(ROUND_DURATION)
@@ -174,7 +176,7 @@ export default function Game() {
             <StartScreen 
               onStart={startGame} 
               onViewLeaderboard={() => {
-                window.location.href = '/leaderboard'
+                router.push('/leaderboard')
               }} 
             />
           )}

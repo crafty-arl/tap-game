@@ -33,9 +33,10 @@ function LeaderboardContent() {
     try {
       const response = await fetch('/api/leaderboard')
       const data = await response.json()
-      setLeaderboard(data.scores)
+      setLeaderboard(data || [])
     } catch (error) {
       console.error('Error loading leaderboard:', error)
+      setLeaderboard([])
     }
   }
 
@@ -68,8 +69,8 @@ function LeaderboardContent() {
 
   const indexOfLastScore = currentPage * scoresPerPage
   const indexOfFirstScore = indexOfLastScore - scoresPerPage
-  const currentScores = leaderboard.slice(indexOfFirstScore, indexOfLastScore)
-  const totalPages = Math.ceil(leaderboard.length / scoresPerPage)
+  const currentScores = leaderboard?.slice(indexOfFirstScore, indexOfLastScore) || []
+  const totalPages = Math.ceil((leaderboard?.length || 0) / scoresPerPage)
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-background to-secondary">
